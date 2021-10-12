@@ -1,4 +1,4 @@
-
+library(shinydashboard)
 
 server <- function(input, output) {
 
@@ -7,52 +7,86 @@ server <- function(input, output) {
 
   MNormale <- reactive(matrix(rnorm((input$lengthX)**2, input$mean2, sqrt(input$variance2)), nrow = input$lengthX))
   MoyN <- reactive(moving_average(MNormale(), r = input$rayon))
+
   MPoisson <- reactive(matrix(rpois((input$lengthX)**2, input$lambda2), nrow = input$lengthX))
   MoyP <- reactive(moving_average(MPoisson(), r = input$rayon))
   MBernoulli <- reactive(matrix(rbinom((input$lengthX)**2, 1, input$p2), nrow = input$lengthX))
   MoyB <- reactive(moving_average(MBernoulli(), r = input$rayon))
   MStudent <- reactive(matrix(rt((input$lengthX)**2, input$k2), nrow = input$lengthX))
   MoyS <- reactive(moving_average(MStudent(), r = input$rayon))
+
   output$matrice <- renderPlot({
     if (input$distribution2 == "Normal distribution"){
+      if(!input$button_MA_AC){
+        paletteinf <- min(MoyN())
+        palettesup <- max(MoyN())
+      }
+      else if(input$button_MA_AC){
+        paletteinf <- min(MNormale())
+        palettesup <- max(MNormale())
+      }
       p1 <- plot_matrix(MNormale(), titre = "Matrice")
-      p2 <- plot_matrix(MoyN(), titre = "Matrice", r = input$rayon) + coord_cartesian(xlim = c(0, dim(MNormale())[1]), ylim = c(dim(MNormale())[2], 0))
+      p2 <- plot_matrix(MoyN(), titre = "Matrice", r = input$rayon, paletteinf = paletteinf, palettesup = palettesup) + coord_cartesian(xlim = c(0, dim(MNormale())[1]), ylim = c(dim(MNormale())[2], 0))
       cowplot::plot_grid(p1,p2, ncol = 1, nrow = 2)}
     #plot_matrix(matrix(c(1,2,3,4), nrow = 2) ) }
     else if (input$distribution2 == "Poisson distribution"){
+      if(!input$button_MA_AC){
+        paletteinf <- min(MoyP())
+        palettesup <- max(MoyP())
+      }
+      else if(input$button_MA_AC){
+        paletteinf <- min(MPoisson())
+        palettesup <- max(MPoisson())
+      }
       p1 <- plot_matrix(MPoisson(), titre = "Matrice")
-      p2 <- plot_matrix(MoyP(), titre = "Matrice", r = input$rayon) + coord_cartesian(xlim = c(0, dim(MPoisson())[1]), ylim = c(dim(MPoisson())[2], 0))
+      p2 <- plot_matrix(MoyP(), titre = "Matrice", r = input$rayon, paletteinf = paletteinf, palettesup = palettesup) + coord_cartesian(xlim = c(0, dim(MPoisson())[1]), ylim = c(dim(MPoisson())[2], 0))
       cowplot::plot_grid(p1,p2, ncol=1, nrow=2)}
     else if (input$distribution2 == "Bernoulli distribution"){
+      if(!input$button_MA_AC){
+        paletteinf <- min(MoyB())
+        palettesup <- max(MoyB())
+      }
+      else if(input$button_MA_AC){
+        paletteinf <- min(MBernoulli())
+        palettesup <- max(MBernoulli())
+      }
       p1 <- plot_matrix(MBernoulli(), titre = "Matrice")
-      p2 <- plot_matrix(MoyB(), titre = "Matrice", r = input$rayon) + coord_cartesian(xlim = c(0, dim(MBernoulli())[1]), ylim = c(dim(MBernoulli())[2], 0))
+      p2 <- plot_matrix(MoyB(), titre = "Matrice", r = input$rayon, paletteinf = paletteinf, palettesup = palettesup) + coord_cartesian(xlim = c(0, dim(MBernoulli())[1]), ylim = c(dim(MBernoulli())[2], 0))
       cowplot::plot_grid(p1,p2, ncol=1, nrow=2)}
     else if (input$distribution2 == "Student distribution"){
+      if(!input$button_MA_AC){
+        paletteinf <- min(MoyS())
+        palettesup <- max(MoyS())
+      }
+      else if(input$button_MA_AC){
+        paletteinf <- min(MStudent())
+        palettesup <- max(MStudent())
+      }
       p1 <- plot_matrix(MStudent(), titre = "Matrice")
-      p2 <- plot_matrix(MoyS(), titre = "Matrice", r = input$rayon) + coord_cartesian(xlim = c(0, dim(MStudent())[1]), ylim = c(dim(MStudent())[2], 0))
+      p2 <- plot_matrix(MoyS(), titre = "Matrice", r = input$rayon, paletteinf = paletteinf, palettesup = palettesup) + coord_cartesian(xlim = c(0, dim(MStudent())[1]), ylim = c(dim(MStudent())[2], 0))
       cowplot::plot_grid(p1,p2, ncol=1, nrow=2)}
   })
 
 
   output$Cov_Z <- renderPlot({
   if (input$distribution2 == "Normal distribution"){
-    covZ <- plot_actual_cov(MNormale(), 0, liste(input$les_directions_a), input$maxcZ)
+    covZ <- plot_actual_cov(MNormale(), 0, liste(input$les_directions_a), max = input$maxcZ)
     covY <- plot_actual_cov(MNormale(), input$rayon, liste(input$les_directions_a), max = input$maxcY)
     cowplot::plot_grid(covZ, covY, ncol=2, nrow=1)
   }
  else if (input$distribution2 == "Poisson distribution"){
-   covZ <- plot_actual_cov(MPoisson(), 0, liste(input$les_directions_a), input$maxcZ)
+   covZ <- plot_actual_cov(MPoisson(), 0, liste(input$les_directions_a), max = input$maxcZ)
    covY <- plot_actual_cov(MPoisson(), input$rayon, liste(input$les_directions_a), max = input$maxcY)
    cowplot::plot_grid(covZ, covY, ncol=2, nrow=1)
  }
  else if (input$distribution2 == "Bernoulli distribution"){
-   covZ <- plot_actual_cov(MBernoulli(), 0, liste(input$les_directions_a), input$maxcZ)
+   covZ <- plot_actual_cov(MBernoulli(), 0, liste(input$les_directions_a), max = input$maxcZ)
    covY <- plot_actual_cov(MBernoulli(), input$rayon, liste(input$les_directions_a), max = input$maxcY)
    cowplot::plot_grid(covZ, covY, ncol=2, nrow=1)
  }
 
     else if (input$distribution2 == "Student distribution"){
-      covZ <- plot_actual_cov(MStudent(), 0, liste(input$les_directions_a), input$maxcZ)
+      covZ <- plot_actual_cov(MStudent(), 0, liste(input$les_directions_a), max = input$maxcZ)
       covY <- plot_actual_cov(MStudent(), input$rayon, liste(input$les_directions_a), max = input$maxcY)
       cowplot::plot_grid(covZ, covY, ncol=2, nrow=1)
     }
@@ -69,10 +103,10 @@ server <- function(input, output) {
 
   output$espace <- renderText(
     if (input$distribution2 == "Normal distribution"){
-      {paste("<br><br><br><br><br>")}
+      {paste("<br><br><br>")}
     }
 
-    else{paste("<br><br><br><br><br><br><br><br><br>")})
+    else{paste("<br><br><br><br><br><br><br>")})
 
 
 
@@ -85,13 +119,14 @@ server <- function(input, output) {
 
   output$plot_summary <- renderPlot({
     if (input$distribution_s == "Normal distribution"){
-      affichage_general(matrix(rnorm(input$lengthX_s**2, input$mean_s, sqrt(input$variance_s)), nrow = input$lengthX_s), input$r_s)}
+      affichage_general(matrix(rnorm(input$lengthX_s**2, input$mean_s, sqrt(input$variance_s)), nrow = input$lengthX_s), input$r_s, mmechelle = input$button_MA_S)}
     else if (input$distribution_s == "Poisson distribution"){
-      affichage_general(matrix(rpois(input$lengthX_s**2, input$lambda_s), nrow = input$lengthX_s), input$r_s)}
+      affichage_general(matrix(rpois(input$lengthX_s**2, input$lambda_s), nrow = input$lengthX_s), input$r_s, mmechelle = input$button_MA_AC)}
     else if (input$distribution_s == "Bernoulli distribution"){
-      affichage_general(matrix(rbinom(input$lengthX_s**2, 1, input$p_s), nrow = input$lengthX_s), input$r_s)}
+      affichage_general(matrix(rbinom(input$lengthX_s**2, 1, input$p_s), nrow = input$lengthX_s), input$r_s, mmechelle = input$button_MA_AC)}
     else if (input$distribution_s == "Student distribution"){
-      affichage_general(matrix(rt(input$lengthX_s**2, input$k_s), nrow = input$lengthX_s), input$r_s)}
+      affichage_general(matrix(rt(input$lengthX_s**2, input$k_s), nrow = input$lengthX_s), input$r_s, mmechelle = input$button_MA_AC)}
+
   })
 
 
@@ -213,13 +248,13 @@ server <- function(input, output) {
   ###############################################################
 
   output$presentation <- renderText(
-    paste("This app shows random generated fieds as matrix. It shows also the distributions and their parametres.<br><br>
+    paste("This app shows random generated fieds as matrix. It also shows the distributions and their parametres.<br><br>
           What is more, you can use a moving average function and vizualise the new field generated (this is then a structured field !)<br>
           The moving average is calculated on a squared moving window.
           <br><br>
           In the app, the parameter called <i>radius of the window</i> gives the number of points under, above, at the right and at the left of the central point of the window. For
           example, r = 10 means that the window is 21x21.<br>
-          The actual correlation (the empirical one) and the expected correlation (the theoritical one) are showned in the two last panel.<br><br>
+          The actual correlation (the empirical one) and the expected correlation (the theoritical one) are showned in the two last panels.<br><br>
           Hope you will enjoy !
           "))
 

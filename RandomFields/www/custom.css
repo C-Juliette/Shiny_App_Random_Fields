@@ -1,0 +1,99 @@
+
+.sidebar {
+  color: #FFF;
+  position: fixed;
+  width: 220px;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.content {
+  padding-top: 60px;
+}
+
+.main-header {
+  position: fixed;
+  width:100%;
+}
+
+
+.main-header .logo {
+  font-family: "Georgia", Times, "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+
+
+/* logo
+ .skin-blue .main-header .logo {
+                       background-color: #250032;
+}*/
+ /* logo when hovered
+ .skin-blue .main-header .logo:hover {
+                              background-color: #250032;
+}*/
+
+/* navbar (rest of the header)
+.skin-blue .main-header .navbar {
+                      background-color: #990058;
+                      }*/
+
+
+
+/* main sidebar
+.skin-blue .main-sidebar {
+                      background-color: #f4b943;
+                      }*/
+
+/* active selected tab in the sidebarmenu
+.skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
+                      background-color: #ff0000;
+                      }*/
+
+/* other links in the sidebarmenu
+.skin-blue .main-sidebar .sidebar .sidebar-menu a{
+                      background-color: #00ff00;
+                      color: #000000;
+                      }*/
+
+/* other links in the sidebarmenu when hovered
+ .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
+                      background-color: #250032;
+                      }*/
+
+/* toggle button when hovered
+ .skin-blue .main-header .navbar .sidebar-toggle:hover{
+                      background-color: #250032;*/
+ }
+
+/*
+.js-irs-0 .irs-bar {
+border-top-color: #d01010;
+border-bottom-color: #d01010;
+}
+
+.js-irs-0 .irs-bar-edge {
+border-color: #d01010;
+}
+
+.js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {
+background: #a00;
+}
+
+.js-irs-1 .irs-bar {
+border-top-color: #10d010;
+border-bottom-color: #10d010;
+}
+
+.js-irs-1 .irs-bar-edge {
+border-color: #10d010;
+}
+
+.js-irs-1 .irs-single, .js-irs-1 .irs-bar-edge, .js-irs-1 .irs-bar {
+background: #0a0;
+}
+*/
+
+
+

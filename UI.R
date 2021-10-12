@@ -1,3 +1,8 @@
+library(shinydashboard)
+library(ggplot2)
+library(randomfields)
+source('Randomly_generated_fields.R')
+
 
 ui <- dashboardPage(
   dashboardHeader(title = "Random Fields"),
@@ -58,14 +63,16 @@ ui <- dashboardPage(
                                label = "Choose the radius",
                                min = 1, max = 30, value = 1
                   ),
-                  width = 3
+                  checkboxInput("button_MA_S", "Common color scale"),
+
+                  width = 4
 
                 ),
 
                 box(
                   h3("Summary"),
                   plotOutput("plot_summary"),
-                  width = 9
+                  width = 8
                 )
 
 
@@ -151,7 +158,9 @@ ui <- dashboardPage(
                   sliderInput("rayon",
                               label = "Choose the radius r of the window used for the moving average:",
                               min = 0, max = 100, value = 1),
+                  checkboxInput("button_MA_AC", "Common color scale"),
                   htmlOutput("espace")
+
 
 
                 ),
@@ -186,7 +195,7 @@ ui <- dashboardPage(
                   #                    label = "Choose the radius",
                   #                    choices = c("0", "1", "2", "3", "4", "5", "6", "7"," 8"),
                   #                    selected = "1"),
-                  textInput("rayons_c", "Choose the radius", value = "1"),
+                  textInput("rayons_c", "Choose the radius (several are possible)", value = "1"),
                   checkboxGroupInput(inputId = "directions_c",
                                      label = "Choose the direction",
                                      choices = c("(0, 1)", "(1, 1)", "(1, 2)", "(1, 3)", "(1, 4)", "(2, 3)", "(3, 4)"),

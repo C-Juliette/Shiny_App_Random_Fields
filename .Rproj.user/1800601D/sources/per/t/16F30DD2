@@ -3,7 +3,7 @@
     "path": "~/Documents/Shiny_app_new/Shiny_app2.R",
     "project_path": "Shiny_app2.R",
     "type": "r_source",
-    "hash": "3827011788",
+    "hash": "1047701909",
     "contents": "",
     "dirty": false,
     "created": 1626868239339.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "14,0",
+        "cursorPosition": "16,0",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1626871864,
+    "lastKnownWriteTime": 1627044069,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1626871864506,
+    "last_content_update": 1627044069,
     "read_only": false,
     "read_only_alternatives": []
 }
